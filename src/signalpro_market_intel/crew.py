@@ -13,7 +13,7 @@ from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledge
 
 from signalpro_market_intel.tools.custom_tool import search_tool
 
-DEFAULT_RECIPIENT = "jameschen1127@gmail.com"
+DEFAULT_RECIPIENTS = "jameschen1127@gmail.com,aks60808@gmail.com"
 
 
 @CrewBase
@@ -36,7 +36,8 @@ class SignalproMarketIntel():
         """Send the completed report via Gmail after crew finishes."""
         sender = os.environ.get("GMAIL_SENDER")
         password = os.environ.get("GMAIL_APP_PASSWORD")
-        recipient = os.environ.get("EMAIL_RECIPIENT", DEFAULT_RECIPIENT)
+        recipients = os.environ.get("EMAIL_RECIPIENTS", DEFAULT_RECIPIENTS)
+        recipient_list = [r.strip() for r in recipients.split(",") if r.strip()]
 
         if not sender or not password:
             print("Email not configured. Set GMAIL_SENDER and GMAIL_APP_PASSWORD.")
@@ -47,7 +48,7 @@ class SignalproMarketIntel():
 
         msg = MIMEMultipart()
         msg["From"] = sender
-        msg["To"] = recipient
+        msg["To"] = ", ".join(recipient_list)
         msg["Subject"] = f"AI 市場情報報告 — {date_str}"
         msg.attach(MIMEText(report_content, "plain", "utf-8"))
 
@@ -64,7 +65,7 @@ class SignalproMarketIntel():
                 server.starttls()
                 server.login(sender, password)
                 server.send_message(msg)
-            print(f"Report emailed to {recipient}")
+            print(f"Report emailed to {', '.join(recipient_list)}")
         except Exception as e:
             print(f"Failed to send email: {e}")
 
