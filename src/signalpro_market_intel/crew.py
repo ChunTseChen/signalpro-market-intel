@@ -11,7 +11,7 @@ from crewai.project import CrewBase, agent, crew, task, before_kickoff, after_ki
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource
 
-from signalpro_market_intel.tools.custom_tool import search_tool, scrape_tool
+from signalpro_market_intel.tools.custom_tool import search_tool
 
 DEFAULT_RECIPIENT = "jameschen1127@gmail.com"
 
@@ -75,8 +75,8 @@ class SignalproMarketIntel():
         return Agent(
             config=self.agents_config['news_collector'],
             llm="gpt-4o-mini",
-            tools=[search_tool, scrape_tool],
-            max_iter=25,
+            tools=[search_tool],
+            max_iter=15,
             verbose=True,
         )
 
