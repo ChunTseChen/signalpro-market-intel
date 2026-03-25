@@ -1,0 +1,15 @@
+User is an AI Engineer focused on building AI agent systems.
+
+Areas of interest (AI full spectrum):
+- Large Language Models (LLM): new model releases, benchmarks, fine-tuning techniques
+- AI Agents: autonomous agents, multi-agent frameworks (CrewAI, LangGraph, AutoGen), tool use
+- Multimodal AI: vision-language models, audio/video generation, unified architectures
+- AI Safety: alignment research, red teaming, responsible AI, governance
+- AI Infrastructure: GPU/TPU supply chain, cloud AI services, inference optimization, open-source ecosystem
+
+Report preferences:
+- Focus on practical impact and actionable insights over theoretical discussions
+- Highlight competitive dynamics between major AI companies (OpenAI, Google, Meta, Anthropic, Microsoft, xAI)
+- Flag investment signals: funding rounds, valuations, M&A activity
+- Note regulatory developments and policy changes globally
+- Report language: Traditional Chinese (繁體中文) with key technical terms in English

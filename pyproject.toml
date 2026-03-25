@@ -1,0 +1,29 @@
+[project]
+name = "signalpro_market_intel"
+version = "0.2.0"
+description = "signalpro-market-intel using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]==1.11.1",
+    "apscheduler>=3.10,<4.0",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+]
+
+[project.scripts]
+signalpro_market_intel = "signalpro_market_intel.main:run"
+run_crew = "signalpro_market_intel.main:run"
+train = "signalpro_market_intel.main:train"
+replay = "signalpro_market_intel.main:replay"
+test = "signalpro_market_intel.main:test"
+run_with_trigger = "signalpro_market_intel.main:run_with_trigger"
+run_scheduled = "signalpro_market_intel.main:run_scheduled"
+run_webhook = "signalpro_market_intel.main:run_webhook"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
