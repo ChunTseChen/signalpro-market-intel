@@ -38,38 +38,26 @@ def run():
 
 def run_scheduled():
     """
-    Start a blocking scheduler that runs the crew every 3 days.
-    Defaults to 08:00; override with SCHEDULE_HOUR / SCHEDULE_MINUTE env vars.
-    Override interval with SCHEDULE_INTERVAL_DAYS (default: 3).
-    Executes once immediately on startup, then on schedule.
+    Start a blocking scheduler that runs the crew every Monday at 08:00.
+    Override with SCHEDULE_HOUR / SCHEDULE_MINUTE / SCHEDULE_DAY_OF_WEEK env vars.
     """
     from apscheduler.schedulers.blocking import BlockingScheduler
-    from apscheduler.triggers.interval import IntervalTrigger
+    from apscheduler.triggers.cron import CronTrigger
 
     hour = int(os.environ.get("SCHEDULE_HOUR", "8"))
     minute = int(os.environ.get("SCHEDULE_MINUTE", "0"))
-    interval_days = int(os.environ.get("SCHEDULE_INTERVAL_DAYS", "3"))
+    day_of_week = os.environ.get("SCHEDULE_DAY_OF_WEEK", "mon")
 
     scheduler = BlockingScheduler()
-
-    # First run is scheduled at the next occurrence of HH:MM,
-    # then repeats every interval_days.
-    from datetime import time as dt_time
-    start = datetime.combine(datetime.now().date(), dt_time(hour, minute))
-    if start <= datetime.now():
-        from datetime import timedelta
-        start += timedelta(days=interval_days)
-
     scheduler.add_job(
         run,
-        IntervalTrigger(days=interval_days, start_date=start),
-        id="periodic_intel",
-        name=f"AI Market Intelligence (every {interval_days} days)",
+        CronTrigger(day_of_week=day_of_week, hour=hour, minute=minute),
+        id="weekly_intel",
+        name=f"AI Market Intelligence (every {day_of_week} {hour:02d}:{minute:02d})",
     )
 
-    print(f"Scheduler started. Will run every {interval_days} days at {hour:02d}:{minute:02d}.")
-    print("Running immediately on startup...")
-    run()
+    print(f"Scheduler started. Will run every {day_of_week} at {hour:02d}:{minute:02d}.")
+    print(f"Next Monday: 2026-03-30")
 
     try:
         scheduler.start()
