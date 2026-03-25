@@ -92,7 +92,7 @@ class SignalproMarketIntel():
     def report_writer(self) -> Agent:
         return Agent(
             config=self.agents_config['report_writer'],
-            llm="anthropic/claude-sonnet-4-6",
+            llm="anthropic/claude-haiku-4-5-20251001",
             verbose=True,
         )
 
